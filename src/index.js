@@ -1,32 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
 
-import alphavantage from 'alphavantage'
+import Dashboard from './components/Dashboard'
 
-console.log(process.env);
-
-const alpha = alphavantage({
-  key: 'WJY2N6Q86IFIARMN'
-})
-
-alpha.data.batch([`msft`, `aapl`]).then(data => {
-  console.log(data);
-});
-
-
-alpha.data.intraday(`msft`).then(data => {
-  console.log(data);
-});
-
-
-alpha.data.intraday(`msfbadt`)
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  })
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <div>App</div>, document.getElementById('root')
+  <Provider store={store}>
+    <Dashboard />
+  </Provider>, document.getElementById('root')
 )
