@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Stock Charts
 
+Demo: https://whispering-badlands-64917.herokuapp.com/
+
 built with React/Redux
 
 Features:
