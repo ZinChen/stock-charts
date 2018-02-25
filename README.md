@@ -1,11 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Сделайте, пожалуйста, небольшое тестовое задание:
+## Stock Charts
 
-Создать простое одностраничное веб-приложение (React+Redux, LESS) о цене акций/валют (на ваш выбор).
+built with React/Redux
 
+Features:
 
-Приложение должно уметь:
-1. Добавлять, удалять компанию/валюту.
-2. Сохранять локально данные (восстанавливать при повторном входе), обновлять данные по запросу, либо автоматически.
-3. Результат разработки должен быть сохранён на сервисе github с локальными коммитами разработчика.
+* Add/delete Symbols
+* Store symbols in Browser Local Storage
+* Periodically update data
+* Update date with button
