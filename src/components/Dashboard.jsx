@@ -4,7 +4,7 @@ import SymbolList from './SymbolList'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateSymbols, addSymbol, updating } from '../actions';
-import { getSymbolNames } from '../helpers';
+import { getSymbolNames, isSymbolAdded } from '../helpers';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -45,13 +45,21 @@ class Dashboard extends Component {
   }
 
   addSymbol() {
+    this.setState({errorMessage: ''});
     let newSymbols = this.state.newSymbols.split(',').map(item => item.trim());
     if (newSymbols && newSymbols.length) {
       alpha.data.batch(this.state.newSymbols)
         .then(data => {
           data['Stock Quotes'].forEach(symbol => {
-            this.props.addSymbol(symbol);
+            if (!isSymbolAdded(this.props.symbols, symbol)) {
+              this.props.addSymbol(symbol);
+            } else {
+              this.setState({errorMessage: 'Symbols already added'});
+            }
           });
+          if (data['Stock Quotes'].length !== newSymbols.length) {
+            this.setState({errorMessage: 'Some of symbols does not exists'});
+          }
         })
         .catch(error => {
           this.setState({errorMessage: 'Some of symbols does not exists'});

@@ -35,7 +35,6 @@ class SymbolList extends Component {
 
 function mapStateToProps(state) {
   const { symbols } = state;
-  console.log('state IN LIST', state);
   return {
     symbols
   }

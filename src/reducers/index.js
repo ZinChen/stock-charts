@@ -1,14 +1,9 @@
 import { ADD_SYMBOL, UPDATE_SYMBOLS, UPDATING, REMOVE_SYMBOL } from '../constants';
+import { deleteSymbol } from '../helpers';
 
 function getSymbolsFromLocalStorage() {
   let symbols = localStorage.getItem('symbols')
   return JSON.parse(symbols) || [];
-}
-
-function deleteSymbol(symbols = [], symbolName) {
-  return symbols.filter(symbol =>
-    symbol["1. symbol"].toLowerCase() !== symbolName.toLowerCase()
-  );
 }
 
 let symbols = getSymbolsFromLocalStorage();
