@@ -11,18 +11,18 @@ class SymbolList extends Component {
 
   render() {
     return (
-      <div className="symbol-list col-md-6">
+      <div className='symbol-list'>
         {
           this.props.symbols.map((symbol, index) => {
             return (
-              <div className="symbol-list-item row" key={index}>
-                <div className="col-sm-6"> {symbol["1. symbol"]} </div>
-                <div className="col-sm-4"> {symbol["2. price"]} </div>
-                <div className="col-sm-2">
+              <div className='symbol-list-item row' key={index}>
+                <div className='col-sm-6'> {symbol['1. symbol']} </div>
+                <div className='col-sm-5'> {symbol['2. price']} USD</div>
+                <div className='col-sm-1'>
                   <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => this.removeSymbol(symbol["1. symbol"])}
-                  ><i className="fa fa-trash"></i></button>
+                    className='btn btn-sm btn-danger'
+                    onClick={() => this.removeSymbol(symbol['1. symbol'])}
+                  ><i className='fa fa-trash'></i></button>
                 </div>
               </div>
             )

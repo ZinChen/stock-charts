@@ -4,6 +4,5 @@ export function getSymbolNames(symbols) {
   symbols.forEach(element => {
     names.push(element["1. symbol"]);
   });
-  console.log(names);
   return names;
 }

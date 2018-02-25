@@ -30,6 +30,7 @@ export default (state = alphaStore, action) => {
       break;
     case UPDATE_SYMBOLS:
       result.symbols = action.symbols;
+      result.isUpdating = false;
       break;
     case UPDATING:
       result.isUpdating = action.status;
@@ -40,7 +41,6 @@ export default (state = alphaStore, action) => {
     default:
       break;
   }
-  console.log('updating state', state, action);
   localStorage.setItem('symbols', JSON.stringify(result.symbols));
   return result;
 }

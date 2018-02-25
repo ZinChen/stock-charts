@@ -11,12 +11,21 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       newSymbols: '',
-      errorMessage: ''
+      errorMessage: '',
+      secondsToUpdate: 10
     }
   }
 
   componentDidMount() {
     this.updateSymbols();
+    setInterval(() => {
+      let left = this.state.secondsToUpdate;
+      if (left) {
+        this.setState({secondsToUpdate: left - 1});
+      } else if (!this.props.isUpdating) {
+        this.updateSymbols();
+      }
+    }, 1000);
   }
 
   updateSymbols() {
@@ -30,12 +39,12 @@ class Dashboard extends Component {
       this.props.updating(true);
       alpha.data.batch(symbolNames).then(data => {
         this.props.updateSymbols(data['Stock Quotes']);
+        this.setState({secondsToUpdate: 10});
       });
     }
   }
 
   addSymbol() {
-    console.log('state', this.state);
     let newSymbols = this.state.newSymbols.split(',').map(item => item.trim());
     if (newSymbols && newSymbols.length) {
       alpha.data.batch(this.state.newSymbols)
@@ -55,13 +64,21 @@ class Dashboard extends Component {
   }
 
   render() {
+    let updateButtonText = 'Update'
+    if (this.props.isUpdating) {
+      updateButtonText = <span><i className='fa fa-spinner spin'></i> Updating</span>
+    }
+
     return (
-      <div>
-        <div className='form-inline'>
+      <div className='container symbols-container col-md-6'>
+        <h1 className="text-center">Stock Charts</h1>
+        <div className='form-inline add-symbols-form'>
+          <label>Add symbols: </label>
           <input
             className='form-control'
             type='text'
             placeholder='MSFT, AAPL'
+            title="GOOG, AMZN, MSFT, AAPL, SFB"
             value={this.state.newSymbols}
             onChange={event => this.setState({newSymbols: event.target.value.toUpperCase()})}
             onKeyPress={e => e.key === 'Enter' ? this.addSymbol() : null }
@@ -74,14 +91,27 @@ class Dashboard extends Component {
         </div>
         {this.state.errorMessage}
         <SymbolList />
+        <div className="update-panel">
+          <span>Will be updated in {this.state.secondsToUpdate} seconds</span>
+          <button
+            className='btn btn-primary pull-right'
+            type='button'
+            onClick={() => this.updateSymbols()}
+            disabled={this.props.isUpdating}
+          >{updateButtonText}</button>
+        </div>
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  console.log('state', state);
-  return state;
+  let { isUpdating } = state;
+  let { symbols } = state;
+  return {
+    isUpdating,
+    symbols
+  };
 }
 
 function mapDispatchToProps(dispatch) {
